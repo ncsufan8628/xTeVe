@@ -54,6 +54,7 @@ RUN apk upgrade
 # Install CA certificates
 RUN apk add --no-cache ca-certificates
 RUN apk add curl
+RUN apk add --no-cache libc6-compat
 
 # Timezone (TZ)
 RUN apk update && apk add --no-cache tzdata
