@@ -27,6 +27,10 @@
 * Channel logos
 * Channel categories
 
+Mapping notes:
+* Channel mapping changes made in the popup are saved when clicking `Done`
+* The mapping popup includes an `Update Channel Logo` option to keep `x-update-channel-icon` in sync with the M3U logo on update
+
 #### Streaming
 
 * Buffer with HLS / M3U8 support

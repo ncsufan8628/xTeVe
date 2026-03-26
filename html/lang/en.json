@@ -255,9 +255,9 @@
       "description": ""
     },
     "updateChannelLogo": {
-      "title": "Use logo from M3U",
+      "title": "Update Channel Logo",
       "placeholder": "",
-      "description": ""
+      "description": "If checked, use logo from the M3U on update"
     },
     "epgCategory": {
       "title": "EPG Category",

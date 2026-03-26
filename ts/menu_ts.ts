@@ -1734,15 +1734,12 @@ function openPopUp(dataType, element) {
 
       // Channel logo update
       var dbKey: string = "x-update-channel-icon"
-      if (BULK_EDIT) {
-        var input = content.createCheckbox(dbKey)
-        input.checked = data[dbKey]
-      } else {
-        var input = content.createInput("button", "Use M3U Logo", "Use M3U Logo")
-      }
+      var input = content.createCheckbox(dbKey)
+      input.checked = data[dbKey]
       input.setAttribute("id", "update-icon")
-      input.setAttribute("onclick", "javascript: this.className = 'changed'; changeChannelLogo('" + id + "');")
+      input.setAttribute("onchange", "javascript: this.className = 'changed'")
       content.appendRow("{{.mapping.updateChannelLogo.title}}", input)
+      content.description("{{.mapping.updateChannelLogo.description}}")
 
       // Expand EPG category
       var dbKey: string = "x-category"
@@ -2270,7 +2267,7 @@ function donePopupData(dataType: string, idsStr: string) {
 
   let ids: string[] = idsStr.split(',');
   let div = document.getElementById("popup-custom")
-  let inputs = div.getElementsByClassName("changed")
+  let inputs = div.getElementsByTagName("TABLE")[0].querySelectorAll("input, select")
 
   ids.forEach(id => {
     let input: Object;
@@ -2382,6 +2379,10 @@ function donePopupData(dataType: string, idsStr: string) {
 
 
   });
+
+  if (dataType == "mapping") {
+    savePopupData("mapping", "", false, 0)
+  }
 
   showElement("popup", false);
   if ((document.getElementById("badChannels") as HTMLInputElement).checked) {

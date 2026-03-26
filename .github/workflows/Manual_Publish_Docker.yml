@@ -1,5 +1,8 @@
 name: Manual Publish Docker
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
   
 jobs:
