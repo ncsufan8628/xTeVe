@@ -313,6 +313,14 @@ tbody {
   padding: 0px 2px;
 }
 
+#content_table.bulkEditing,
+#content_table.bulkEditing * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #content_table input[type=text] {
   width: 80%;
   min-width: 35px;

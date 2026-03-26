@@ -410,6 +410,7 @@ class Content {
           var cell: Cell = new Cell()
           cell.child = true
           cell.childType = "BULK"
+          cell.id = key
           cell.value = false
           tr.appendChild(cell.createCell())
 
@@ -581,6 +582,7 @@ class Cell {
           (element as HTMLInputElement).checked = this.value;
           (element as HTMLInputElement).type = "checkbox";
           (element as HTMLInputElement).className = "bulk hideBulk";
+          (element as HTMLInputElement).dataset.channelId = this.id;
           break
 
         case "BULK_HEAD":
@@ -899,6 +901,7 @@ class ShowContent extends Content {
 
     switch (menuKey) {
       case "mapping":
+        bindMappingBulkHandlers(table as HTMLTableElement)
         sortTable(1)
         break;
 

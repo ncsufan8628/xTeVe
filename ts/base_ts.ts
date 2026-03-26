@@ -3,6 +3,8 @@ var BULK_EDIT: Boolean = false
 var COLUMN_TO_SORT: number
 var SEARCH_MAPPING = {}
 var UNDO = {}
+var LAST_BULK_SELECTED_CHANNEL = ""
+var BULK_SHIFT_ACTIVE: boolean = false
 //var SERVER_CONNECTION = false
 var WS_AVAILABLE = false
 var LOGO_UPDATE_INTERVAL: number
@@ -176,14 +178,18 @@ function bulkEdit() {
   BULK_EDIT = !BULK_EDIT
   var className: string
   var rows = document.getElementsByClassName("bulk")
+  var table = document.getElementById("content_table")
 
   switch (BULK_EDIT) {
     case true:
       className = "bulk showBulk"
+      table.classList.add("bulkEditing")
       break
 
     case false:
       className = "bulk hideBulk"
+      table.classList.remove("bulkEditing")
+      LAST_BULK_SELECTED_CHANNEL = ""
       break
   }
 
@@ -478,6 +484,99 @@ function backup() {
 
   return
 
+}
+
+document.addEventListener("keydown", function (event: KeyboardEvent) {
+  if (event.key == "Shift") {
+    BULK_SHIFT_ACTIVE = true
+  }
+})
+
+document.addEventListener("keyup", function (event: KeyboardEvent) {
+  if (event.key == "Shift") {
+    BULK_SHIFT_ACTIVE = false
+  }
+})
+
+document.addEventListener("selectstart", function (event: Event) {
+  let table = document.getElementById("content_table")
+  if (BULK_EDIT && table != null && table.classList.contains("bulkEditing")) {
+    event.preventDefault()
+  }
+})
+
+function applyBulkChannelSelection(element: HTMLInputElement, checked: boolean) {
+  let currentChannel = element.dataset.channelId
+  if (!currentChannel) {
+    return
+  }
+
+  let table = document.getElementById("content_table")
+  let rows = table.getElementsByTagName("TR")
+  let start = -1
+  let end = -1
+
+  for (let i = 1; i < rows.length; i++) {
+    let row = rows[i] as HTMLTableRowElement
+    if (row.style.display == "none") {
+      continue
+    }
+
+    if (row.id == LAST_BULK_SELECTED_CHANNEL) {
+      start = i
+    }
+
+    if (row.id == currentChannel) {
+      end = i
+    }
+  }
+
+  if (start == -1 || end == -1) {
+    LAST_BULK_SELECTED_CHANNEL = currentChannel
+    return
+  }
+
+  let min = Math.min(start, end)
+  let max = Math.max(start, end)
+
+  for (let i = min; i <= max; i++) {
+    let row = rows[i] as HTMLTableRowElement
+    if (row.style.display == "none") {
+      continue
+    }
+
+    let checkbox = row.firstChild.firstChild as HTMLInputElement
+    checkbox.checked = checked
+  }
+
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  }
+
+  LAST_BULK_SELECTED_CHANNEL = currentChannel
+}
+
+function bindMappingBulkHandlers(table: HTMLTableElement) {
+  table.addEventListener("click", function (event: MouseEvent) {
+    let target = event.target as HTMLInputElement
+    if (!target || target.type != "checkbox" || !target.classList.contains("bulk")) {
+      return
+    }
+
+    event.stopPropagation()
+
+    if (!target.dataset.channelId) {
+      return
+    }
+
+    let shiftPressed = event.shiftKey || BULK_SHIFT_ACTIVE
+
+    if (shiftPressed && LAST_BULK_SELECTED_CHANNEL != "") {
+      applyBulkChannelSelection(target, target.checked)
+    } else {
+      LAST_BULK_SELECTED_CHANNEL = target.dataset.channelId
+    }
+  })
 }
 
 function toggleChannelStatus(id: string) {
