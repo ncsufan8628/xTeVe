@@ -4,14 +4,11 @@
 
     FROM golang:bullseye AS builder
 
-    # Install git to fetch source
-    RUN apt-get update && apt-get install -y --no-install-recommends git
-    
     # Set working directory
     WORKDIR /src
     
-    # Clone xTeVe repository
-    RUN git clone https://github.com/SenexCrenshaw/xTeVe.git /src
+    # Copy repository source into the build stage
+    COPY . /src
     
     # Build arguments
     ARG TARGETOS=linux
@@ -54,6 +51,7 @@
     ENV XTEVE_BIN=/home/xteve/bin
     ENV XTEVE_CONF=/home/xteve/conf
     ENV XTEVE_HOME=/home/xteve
+    ENV XTEVE_PORT=34400
     ENV XTEVE_TEMP=/tmp/xteve
     ENV PATH=$PATH:$XTEVE_BIN
     ENV TZ=America/New_York
@@ -87,4 +85,4 @@
     EXPOSE ${XTEVE_PORT}
     
     # Entrypoint
-    ENTRYPOINT ["xteve", "-port=34400", "-config=/home/xteve/conf"]    
+    ENTRYPOINT ["sh", "-c", "exec xteve -port=${XTEVE_PORT:-34400} -config=${XTEVE_CONF:-/home/xteve/conf}"]
