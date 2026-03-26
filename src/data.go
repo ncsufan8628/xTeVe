@@ -106,6 +106,20 @@ func updateServerSettings(request RequestStruct) (settings SettingsStruct, err e
 					reloadData = true
 				}
 
+			case "defaultUpdateChannelName":
+				err = setXEPGChannelNameUpdate(value.(bool))
+				if err != nil {
+					return
+				}
+				reloadData = true
+
+			case "defaultUpdateChannelLogo":
+				err = setXEPGChannelLogoUpdate(value.(bool))
+				if err != nil {
+					return
+				}
+				reloadData = true
+
 			case "enableMappedChannels":
 				// If EnableMappedChannels was turned on, rebuild DVR and XEPG database
 				if newSettings["enableMappedChannels"] == true && oldSettings["enableMappedChannels"] == false {
@@ -249,6 +263,54 @@ func updateServerSettings(request RequestStruct) (settings SettingsStruct, err e
 
 	}
 
+	return
+}
+
+func setXEPGChannelNameUpdate(enabled bool) (err error) {
+
+	if len(Data.XEPG.Channels) == 0 {
+		Data.XEPG.Channels, err = loadJSONFileToMap(System.File.XEPG)
+		if err != nil {
+			return
+		}
+	}
+
+	for xepgID, channel := range Data.XEPG.Channels {
+		var xepgChannel XEPGChannelStruct
+		err = json.Unmarshal([]byte(mapToJSON(channel)), &xepgChannel)
+		if err != nil {
+			return
+		}
+
+		xepgChannel.XUpdateChannelName = enabled
+		Data.XEPG.Channels[xepgID] = xepgChannel
+	}
+
+	err = saveMapToJSONFile(System.File.XEPG, Data.XEPG.Channels)
+	return
+}
+
+func setXEPGChannelLogoUpdate(enabled bool) (err error) {
+
+	if len(Data.XEPG.Channels) == 0 {
+		Data.XEPG.Channels, err = loadJSONFileToMap(System.File.XEPG)
+		if err != nil {
+			return
+		}
+	}
+
+	for xepgID, channel := range Data.XEPG.Channels {
+		var xepgChannel XEPGChannelStruct
+		err = json.Unmarshal([]byte(mapToJSON(channel)), &xepgChannel)
+		if err != nil {
+			return
+		}
+
+		xepgChannel.XUpdateChannelIcon = enabled
+		Data.XEPG.Channels[xepgID] = xepgChannel
+	}
+
+	err = saveMapToJSONFile(System.File.XEPG, Data.XEPG.Channels)
 	return
 }
 

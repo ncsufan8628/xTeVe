@@ -394,6 +394,34 @@ class SettingsCategory {
         setting.appendChild(tdRight)
         break
 
+      case "defaultUpdateChannelLogo":
+        var tdLeft = document.createElement("TD")
+        tdLeft.innerHTML = "{{.settings.defaultUpdateChannelLogo.title}}" + ":"
+
+        var tdRight = document.createElement("TD")
+        var input = content.createCheckbox(settingsKey)
+        input.checked = data
+        input.setAttribute("onchange", "javascript: this.className = 'changed'")
+        tdRight.appendChild(input)
+
+        setting.appendChild(tdLeft)
+        setting.appendChild(tdRight)
+        break
+
+      case "defaultUpdateChannelName":
+        var tdLeft = document.createElement("TD")
+        tdLeft.innerHTML = "{{.settings.defaultUpdateChannelName.title}}" + ":"
+
+        var tdRight = document.createElement("TD")
+        var input = content.createCheckbox(settingsKey)
+        input.checked = data
+        input.setAttribute("onchange", "javascript: this.className = 'changed'")
+        tdRight.appendChild(input)
+
+        setting.appendChild(tdLeft)
+        setting.appendChild(tdRight)
+        break
+
       // Select
       case "hostIP":
         var tdLeft = document.createElement("TD")
@@ -696,6 +724,14 @@ class SettingsCategory {
 
       case "enableMappedChannels":
         text = "{{.settings.enableMappedChannels.description}}"
+        break
+
+      case "defaultUpdateChannelLogo":
+        text = "{{.settings.defaultUpdateChannelLogo.description}}"
+        break
+
+      case "defaultUpdateChannelName":
+        text = "{{.settings.defaultUpdateChannelName.description}}"
         break
 
       case "files.update":

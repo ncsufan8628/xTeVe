@@ -1676,15 +1676,11 @@ function openPopUp(dataType, element) {
       content.appendRow("{{.mapping.description.title}}", input)
 
       // Update the channel x-name
-      if (data.hasOwnProperty("_uuid.key")) {
-        if (data["_uuid.key"] != "") {
-          var dbKey: string = "x-update-channel-name"
-          var input = content.createCheckbox(dbKey)
-          input.setAttribute("onchange", "javascript: this.className = 'changed'")
-          input.checked = data[dbKey]
-          content.appendRow("{{.mapping.updateChannelName.title}}", input)
-        }
-      }
+      var dbKey: string = "x-update-channel-name"
+      var input = content.createCheckbox(dbKey)
+      input.setAttribute("onchange", "javascript: this.className = 'changed'")
+      input.checked = data[dbKey]
+      content.appendRow("{{.mapping.updateChannelName.title}}", input)
 
       // Channel name regex for updating the channel name
       var dbKey: string = "update-channel-name-regex"

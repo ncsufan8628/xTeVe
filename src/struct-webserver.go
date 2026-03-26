@@ -31,6 +31,8 @@ type RequestStruct struct {
 		CacheImages              *bool     `json:"cache.images,omitempty"`
 		ClearXMLTVCache          *bool     `json:"clearXMLTVCache,omitempty"`
 		DefaultMissingEPG        *string   `json:"defaultMissingEPG,omitempty"`
+		DefaultUpdateChannelName *bool     `json:"defaultUpdateChannelName,omitempty"`
+		DefaultUpdateChannelLogo *bool     `json:"defaultUpdateChannelLogo,omitempty"`
 		DisallowURLDuplicates    *bool     `json:"disallowURLDuplicates,omitempty"`
 		EnableMappedChannels     *bool     `json:"enableMappedChannels,omitempty"`
 		EnableTapiosinnTVLogos   *bool     `json:"enableTapiosinnTVLogos,omitempty"`

@@ -362,6 +362,14 @@
       "title": "Fill Missing EPG Data",
       "description": "When there is no matching EPG data for channel, <br>autofill with xTeVe dummy EPG data?"
     },
+    "defaultUpdateChannelName": {
+      "title": "Update Channel Name by Default",
+      "description": "Changing this setting updates all existing channel mappings and sets the default for new channels. Individual mapping changes remain until this setting is toggled again."
+    },
+    "defaultUpdateChannelLogo": {
+      "title": "Update Channel Logos by Default",
+      "description": "Changing this setting updates all existing channel mappings and sets the default for new channels. Individual mapping changes remain until this setting is toggled again."
+    },
     "enableMappedChannels": {
       "title": "Enable mapped channels",
       "description": "Automatically enable channels with assigned EPG data"

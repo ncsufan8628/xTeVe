@@ -99,6 +99,9 @@ func loadSettings() (settings SettingsStruct, err error) {
 		return
 	}
 
+	_, hasDefaultUpdateChannelName := settingsMap["defaultUpdateChannelName"]
+	_, hasDefaultUpdateChannelLogo := settingsMap["defaultUpdateChannelLogo"]
+
 	// Set Deafult Values
 	var defaults = make(map[string]interface{})
 	var dataMap = make(map[string]interface{})
@@ -121,6 +124,8 @@ func loadSettings() (settings SettingsStruct, err error) {
 	defaults["cache.images"] = false
 	defaults["clearXMLTVCache"] = false
 	defaults["defaultMissingEPG"] = "-"
+	defaults["defaultUpdateChannelName"] = true
+	defaults["defaultUpdateChannelLogo"] = true
 	defaults["disallowURLDuplicates"] = false
 	defaults["enableTapiosinnTVLogos"] = true
 	defaults["LogosCountry"] = ""
@@ -189,6 +194,23 @@ func loadSettings() (settings SettingsStruct, err error) {
 	settings.TempPath = getValidTempDir(settings.TempPath)
 
 	err = saveSettings(settings)
+	if err != nil {
+		return
+	}
+
+	if !hasDefaultUpdateChannelName {
+		err = setXEPGChannelNameUpdate(settings.DefaultUpdateChannelName)
+		if err != nil {
+			return
+		}
+	}
+
+	if !hasDefaultUpdateChannelLogo {
+		err = setXEPGChannelLogoUpdate(settings.DefaultUpdateChannelLogo)
+		if err != nil {
+			return
+		}
+	}
 
 	// Warning if FFmpeg was not found
 	if len(Settings.FFmpegPath) == 0 && Settings.Buffer == "ffmpeg" {

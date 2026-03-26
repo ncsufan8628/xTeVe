@@ -295,6 +295,8 @@ type SettingsStruct struct {
 	CacheImages            bool     `json:"cache.images"`
 	ClearXMLTVCache        bool     `json:"clearXMLTVCache"`
 	DefaultMissingEPG      string   `json:"defaultMissingEPG"`
+	DefaultUpdateChannelName bool   `json:"defaultUpdateChannelName"`
+	DefaultUpdateChannelLogo bool   `json:"defaultUpdateChannelLogo"`
 	DisallowURLDuplicates  bool     `json:"disallowURLDuplicates"`
 	EnableTapiosinnTVLogos bool     `json:"enableTapiosinnTVLogos"`
 	LogosCountry           string   `json:"logosCountry"`
