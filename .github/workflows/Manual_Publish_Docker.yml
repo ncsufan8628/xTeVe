@@ -1,4 +1,4 @@
-name: Manual Publish Docker
+name: Publish Docker
 on:
   push:
     branches:
@@ -6,10 +6,9 @@ on:
   workflow_dispatch:
   
 jobs:
-  build_docker_and_publish:    
-   runs-on: ubuntu-latest
-   steps:
-     
+  build_docker_and_publish:
+    runs-on: ubuntu-latest
+    steps:
       - name: Clone repository
         uses: actions/checkout@v2
 
@@ -18,13 +17,7 @@ jobs:
         id: xteve_version
         with:
           path: 'release.json'
-          prop_path: 'version' 
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-        with:
-          image: tonistiigi/binfmt:latest
-          platforms: arm64,arm
+          prop_path: 'version'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -39,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/xteve:latest,${{ secrets.DOCKER_USERNAME }}/xteve:${{ steps.xteve_version.outputs.prop }}
