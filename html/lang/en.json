@@ -114,6 +114,11 @@
       "palceholder": "",
       "description": "Preserve existing M3U playlist channel numbers?"
     },
+    "eventGroup": {
+      "title": "Event Group",
+      "placeholder": "",
+      "description": "Re/Assigns all channel numbers every time the playlist updates"
+    },
     "startingChannel": {
       "title": "Starting Channel Number",
       "placeholder": "",

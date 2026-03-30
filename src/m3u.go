@@ -107,6 +107,7 @@ func filterThisStream(s interface{}) (status bool) {
 
 			if group == filter.Rule {
 				match = true
+				stream["_event-group"] = strconv.FormatBool(filter.EventGroup)
 				stream["_preserve-mapping"] = strconv.FormatBool(filter.PreserveMapping)
 				stream["_starting-channel"] = filter.StartingChannel
 			}

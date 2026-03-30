@@ -183,6 +183,7 @@ type DataStruct struct {
 // Filter : Used for the Filter Rules
 type Filter struct {
 	CaseSensitive   bool
+	EventGroup      bool
 	PreserveMapping bool
 	Rule            string
 	Type            string
@@ -236,6 +237,7 @@ type M3UChannelStructXEPG struct {
 	UUIDKey         string `json:"_uuid.key"`
 	UUIDValue       string `json:"_uuid.value"`
 	Values          string `json:"_values"`
+	EventGroup      string `json:"_event-group"`
 	PreserveMapping string `json:"_preserve-mapping"`
 	StartingChannel string `json:"_starting-channel"`
 }
@@ -244,6 +246,7 @@ type M3UChannelStructXEPG struct {
 type FilterStruct struct {
 	Active          bool   `json:"active"`
 	CaseSensitive   bool   `json:"caseSensitive"`
+	EventGroup      bool   `json:"eventGroup"`
 	PreserveMapping bool   `json:"preserveMapping"`
 	Description     string `json:"description"`
 	Exclude         string `json:"exclude"`

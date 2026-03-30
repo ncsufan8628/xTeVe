@@ -1486,6 +1486,12 @@ function openPopUp(dataType, element) {
           input.checked = data[dbKey]
           content.appendRow("{{.filter.preserveMapping.title}}", input)
 
+          var dbKey: string = "eventGroup"
+          var input = content.createCheckbox(dbKey)
+          input.checked = data[dbKey]
+          content.appendRow("{{.filter.eventGroup.title}}", input)
+          content.description("{{.filter.eventGroup.description}}")
+
           // Starting Channel Number Mapping
           var dbKey: string = "startingChannel"
           var input = content.createInput("text", dbKey, data[dbKey])

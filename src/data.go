@@ -490,6 +490,7 @@ func saveFilter(request RequestStruct) (settings SettingsStruct, err error) {
 
 	defaultFilter.Active = true
 	defaultFilter.CaseSensitive = false
+	defaultFilter.EventGroup = false
 	defaultFilter.PreserveMapping = true
 	defaultFilter.StartingChannel = strconv.FormatFloat(Settings.MappingFirstChannel, 'f', -1, 64) // 1000
 
@@ -842,6 +843,7 @@ func createFilterRules() (err error) {
 			}
 
 			dataFilter.CaseSensitive = filter.CaseSensitive
+			dataFilter.EventGroup = filter.EventGroup
 			dataFilter.PreserveMapping = filter.PreserveMapping
 			dataFilter.StartingChannel = filter.StartingChannel
 			dataFilter.Rule = fmt.Sprintf("%s%s%s", filter.Filter, include, exclude)
